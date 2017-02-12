@@ -13,6 +13,6 @@ body,h1,h2,h3,h4,h5,h6{font-style:normal;font-weight:300}#home,#single-project,.
     background-image: url('http://filippoquacquarelli.it/images/ripple.gif');
 }
 
-.sk-inner-circle {
+.sk-spinner-wordpress .sk-inner-circle {
     display: none;
 }
