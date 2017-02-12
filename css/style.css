@@ -8,6 +8,11 @@ body,h1,h2,h3,h4,h5,h6{font-style:normal;font-weight:300}#home,#single-project,.
     animation: initial;
     width: 60px;
     height: 60px;
+    background-color: transparent;
     background-size: 100%;
     background-image: url('http://filippoquacquarelli.it/images/ripple.gif');
+}
+
+.sk-inner-circle {
+    display: none;
 }
