@@ -7,6 +7,11 @@ p {
     margin: 0 0 20px;
 }
 
+.logo {
+    width: 30px;
+    height: 30px;
+}
+
 .social-icon {
     text-align: right;
 }
