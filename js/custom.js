@@ -87,31 +87,31 @@ var PageAbout = {
     		m(".section-title",
     			[
     				m("h3",
-    					"ciao, mi chiamo Filippo Quacquarelli"
+    					"Ciao, mi chiamo Filippo Quacquarelli e sono un Web Developer"
     				),
     				m("h2",
     					elem.title
     				)
     			]
     		),
-    		m(".col-md-8.col-sm-12",
-    			m("img.img-responsive[alt='About']", {src: elem.preview})
-    		),
-    		m(".col-md-4.col-sm-12",
-    			[
-    				m("h1",
-    					elem.subtitle
-    				),
-    				m("p",
-    					elem.previewText.split("|")[0]
-    				),
-            m("p",
-    					elem.previewText.split("|")[1]
-    				)
-    			]
-    		),
+//     		m(".col-md-8.col-sm-12",
+//     			m("img.img-responsive[alt='About']", {src: elem.preview})
+//     		),
+//     		m(".col-md-4.col-sm-12",
+//     			[
+//     				m("h1",
+//     					elem.subtitle
+//     				),
+//     				m("p",
+//     					elem.previewText.split("|")[0]
+//     				),
+//             m("p",
+//     					elem.previewText.split("|")[1]
+//     				)
+//     			]
+//     		),
     		m(".clearfix"),
-    		m("hr"),
+//     		m("hr"),
     		m("p",
     			elem.content[0].text
     		),
