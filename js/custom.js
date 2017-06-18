@@ -124,18 +124,6 @@ var PageAbout = {
     		m("p",
           elem.content[3].text
         ),
-    		m("p",
-          elem.content[4].text
-        ),
-    		m("p",
-    			[
-    				elem.content[5].text.split("|")[0],
-    				m(elem.content[5].text.split("|")[1],
-    					elem.content[5].text.split("|")[2]
-    				),
-    				elem.content[5].text.split("|")[3]
-    			]
-    		),
     		m("hr"),
     		m(".row",
     			[
