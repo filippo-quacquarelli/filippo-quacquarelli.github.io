@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="no-js" lang="it">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+
+            body {
+              text-align: center;
+              font-size: 20px;
+              line-height: 1.6;
+              font-family: sans-serif;
+            }
+
+            .green {
+              background-color: green;
+              color: #fff;
+              padding: 5px 15px;
+              display: inline-block;
+            }
+
+            .red {
+              background-color: red;
+              color: #fff;
+              padding: 5px 15px;
+              display: inline-block;
+            }
+
+            table {
+              width: 100%;
+            }
+
+            #profitto {
+              font-size: 32px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="app">
+          <table>
+            <tbody>
+              <tr id="bitcoin"></tr>
+              <tr id="ethereum"></tr>
+              <tr id="neo"></tr>
+              <tr id="civic"></tr>
+              <tr id="golem-network-tokens"></tr>
+              <tr id="ripple"></tr>
+              <tr id="stellar"></tr>
+            </tbody>
+          </table>
+
+          <div id="totale"></div>
+          <div id="profitto"></div>
+        </div>
+        
+        
+        <script>
+            var coin = {
+              'btc': 'https://api.coinmarketcap.com/v1/ticker/bitcoin/',
+              'eth': 'https://api.coinmarketcap.com/v1/ticker/ethereum/',
+              'neo': 'https://api.coinmarketcap.com/v1/ticker/neo/',
+              'cvc': 'https://api.coinmarketcap.com/v1/ticker/civic/',
+              'gnt': 'https://api.coinmarketcap.com/v1/ticker/golem-network-tokens/',
+              'xrp': 'https://api.coinmarketcap.com/v1/ticker/ripple/',
+              'xlm': 'https://api.coinmarketcap.com/v1/ticker/stellar/'
+            };
+
+            var btcPrice = 0;
+
+            var btcToUsd = 0;
+
+            var price = {};
+
+            var quantity = {
+              "civic":"202.00934318",
+              "ethereum":"0.24647329",
+              "golem-network-tokens":"77.65434940",
+              "neo":"20.61300427",
+              "ripple":"91.49979808",
+              "stellar":"2,384.478",
+            };
+
+            var total = 0;
+
+            var investimento = 385;
+
+            var usdToeur = 0;
+
+            function init() {
+              getPrice(coin.btc)
+              getPrice(coin.eth)
+              getPrice(coin.neo)
+              getPrice(coin.cvc)
+              getPrice(coin.gnt)
+              getPrice(coin.xrp)
+              getPrice(coin.xlm)
+            }
+
+            function renderPrice(data) {
+              price_usd = data[0].price_usd;
+              price_btc = data[0].price_btc;
+              percent_7d = data[0].percent_change_7d;
+              percent_1d = data[0].percent_change_24h;
+              id = data[0].id;
+
+              if ( id == "bitcoin" ) btcPrice = price_usd;
+
+              price[id] = price_btc;
+
+              var valString = "<td>" + id.toUpperCase() + "</td> <td>price usd: " + price_usd + "</td> <td>price btc: " + price_btc + "</td> <td>%7d: " + positiveOrNegative(percent_7d) + "</td> <td>%24h: " + positiveOrNegative(percent_1d) + "</td>";
+
+              document.getElementById(id).innerHTML = valString; 
+
+              if ( id != "bitcoin" ) calcTotal(id)
+              
+              return price;
+            }
+
+
+            function calcTotal(id) {
+              var qt = quantity[id].replace(",", "")
+              
+              total = total + (price[id] * qt);
+              
+              btcToUsd = total*btcPrice;
+              var percentage = (btcToUsd-investimento)/btcToUsd * 100;
+              
+              document.getElementById('totale').innerHTML = "Totale valore investimenti: " + total + " btc percentuale di profitto o perdita: " + positiveOrNegative(percentage) + "%";
+            
+              renderProfit(btcToUsd)
+            }
+
+
+            function renderProfit(btcToUsd) {
+              var euro = (btcToUsd-investimento) * 0.85;
+              euro = positiveOrNegative(euro) + " €";
+              
+              document.getElementById("profitto").innerHTML = euro;
+            }
+
+            function positiveOrNegative(val) {
+              if ( Math.sign(val) == 1 )
+                val = '<strong class="green">'+ val +'</strong>';
+              else
+                val = '<strong class="red">'+ val +'</strong>';
+
+              return val;
+            }
+
+
+            function getPrice(endpoint) {
+              var request = new XMLHttpRequest();
+              request.open('GET', endpoint, true);
+              var data = {};
+
+              request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+
+                  data = JSON.parse(request.responseText);
+                  
+                  renderPrice(data)
+                  return data;
+
+                } else {
+                  alert('error');
+                }
+              };
+
+              request.onerror = function() {
+                alert('error');
+              };
+
+              request.send();
+            }
+
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+              init();
+            });
+        </script>
+    </body>
+</html>
