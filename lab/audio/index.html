@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio analyzer</title>
+
+    <style>
+        body {
+            margin: 0;
+              background-color: #111;
+        }
+
+        #app {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content__text {
+            position: absolute;
+            z-index: 99;
+        }
+
+        #play-btn {
+            text-transform: uppercase;
+            font-family: 'Montserrat';
+            font-size: 30px;
+            padding: 8px 25px;
+            line-height: 1;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #111;
+            color: #fff;
+            letter-spacing: 2px;
+            border: 0;
+            z-index: 999;
+            opacity: 1;
+            transition: 0.2s ease-in-out;
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #play-btn.hide {
+            opacity: 0.5;
+        }
+
+        #play-btn:hover {
+            opacity: 1!important;
+        }
+
+        .p5Canvas,
+        #p5_loading {
+            display: none;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.sound.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="content__text">
+            <span class="content__text-inner">AUDIO</span>
+        </div>
+
+        <button id="play-btn">play</button>
+    </div>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Blotter/0.1.0/blotter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Blotter/0.1.0/materials/liquidDistortMaterial.min.js"></script>
+    <script>
+        const elem = document.querySelector('.content__text');
+        const textEl = elem.querySelector('span.content__text-inner');
+
+        const createBlotterText = () => {
+            const text = new Blotter.Text(textEl.innerHTML, {
+                family : "'Montserrat', sans-serif",
+                weight: 900,
+                size : parseFloat(window.innerWidth*0.10),
+                paddingLeft: 100,
+                paddingRight: 100,
+                fill : '#11c3bd'
+            });
+            elem.removeChild(textEl);
+        
+            const material = new Blotter.LiquidDistortMaterial();
+            material.uniforms.uSpeed.value = 1;
+            material.uniforms.uVolatility.value = 0;
+            material.uniforms.uSeed.value = 0.1;
+            const blotter = new Blotter(material, {texts: text});
+            
+            const scope = blotter.forText(text);
+            
+            scope.appendTo(elem);
+
+            window.addEventListener('resize', function(){
+                scope.text.needsUpdate = true;
+                scope.text.properties.size = parseFloat(window.innerWidth*0.11);
+            });
+            
+            let audio, playBtn, fft;
+
+            const s = (p) => {
+                var fft;
+                
+                p.preload = () => {
+                    audio = p.loadSound('./art-of-silence-3.mp3');
+                }
+
+                p.setup = () => {
+                    playBtn = document.querySelector('#play-btn')
+                    
+                    fft = new p5.FFT(0.9);
+
+                    function textAnimation() {
+                        requestAnimationFrame(textAnimation);
+                        fft.analyze();
+
+                        const bass    = fft.getEnergy("bass")
+                        const treble  = fft.getEnergy("treble")
+                        const mid     = fft.getEnergy("mid")
+                        const lowMid     = fft.getEnergy("lowMid")
+                        const highMid     = fft.getEnergy("highMid")
+                        const basstreble     = fft.getEnergy("bass", "treble")
+                        
+                        const mapTremble  = p.map(treble, 0, 255, 0, 0.2)
+
+                        material.uniforms.uVolatility.value = mapTremble;
+                        
+                    }
+
+                    playBtn.addEventListener('click', () => {
+                        this.toggleAudio(event);
+                        textAnimation();
+                    });
+                }
+
+
+                toggleAudio = (event) => {
+                    if (audio.isPlaying()) {
+                        audio.pause();
+                        event.target.classList.remove('hide');
+                        event.target.innerText = 'play';
+                        
+                    } else {
+                        audio.loop()
+                        console.log(event.target)
+                        event.target.classList.add('hide');
+                        event.target.innerText = 'pause';
+                        
+                    }
+                }
+            };
+
+            new p5(s);
+
+        };
+
+        WebFont.load({
+            google: {
+                families: ['Montserrat:900' ]
+            },
+            active: () => createBlotterText()
+        });
+    </script>
+</body>
+</html>
