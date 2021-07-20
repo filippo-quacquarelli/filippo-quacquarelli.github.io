@@ -77,6 +77,13 @@
                 opacity: 0;
             }
 
+            .lablink {
+                text-decoration: none;
+                font-weight: 700;
+                line-height: 1;
+                /* vertical-align: bottom; */
+            }
+
             @media screen and (max-width: 680px) {
                 .container-text {
                     font-size: 38px;
@@ -103,6 +110,7 @@
             <span class="text-item text-item-fixed"> Developer</span>
 
             <div class="social">
+                <a href="https://filippoquacquarelli.it/lab/" class="lablink" title="lab">LAB</a>
                 <a href="https://it.linkedin.com/in/filippoq/" target="_blank" title="linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                 <a href="https://github.com/filippo-quacquarelli" target="_blank" title="github"><i class="fa fa-github" aria-hidden="true"></i></a>
                 <a href="https://codepen.io/filippoq/" target="_blank" title="codepen"><i class="fa fa-codepen" aria-hidden="true"></i></a>
@@ -112,8 +120,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script>
         <script>
+
             var camera, scene, renderer,
-            geometry, material, mesh;
+                geometry, material, mesh;
         
             init();
             animate();
@@ -142,7 +151,7 @@
                 scene.add(light);
                 
                 THREE.ImageUtils.crossOrigin = '';
-                smokeTexture = THREE.ImageUtils.loadTexture('https://filippoquacquarelli.it/images/Smoke-Element-white.png');
+                smokeTexture = THREE.ImageUtils.loadTexture('./images/Smoke-Element-white.png');
                 smokeMaterial = new THREE.MeshLambertMaterial({color: 0x571083, map: smokeTexture, transparent: true});
                 smokeMaterial.opacity = 0.3;
                 smokeGeo = new THREE.PlaneGeometry(400,400);
