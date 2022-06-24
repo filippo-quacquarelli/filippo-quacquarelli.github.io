@@ -261,12 +261,15 @@ textarea {
   }
 }
 
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Sue Ellen Francisco', cursive;
   font-size: 22px;
   line-height: 1.75;
-  background-color: #1f8297;
+  background-color: #207f96;
 }
 
 img {
@@ -276,7 +279,7 @@ img {
 
 .container {
   max-width: 1920px;
-  margin: 0 auto 100px;
+  margin: 0 auto 150px;
   /* padding: 60px 15px; */
 }
 
@@ -292,7 +295,7 @@ ul {
 }
 
 .menu li {
-  margin: 10px;
+  margin: 20px;
   padding: 0;
   max-width: 150px;
   position: relative;
@@ -306,15 +309,19 @@ ul {
 }
 
 .container-omino {
-  background-image: url(/Omino2.dbe6bf20.gif);
+  background-image: url(/pupo.4e53b923.gif);
   background-size: contain;
   background-position: center;
-  height: 80vh;
+  height: 70vh;
+  margin-bottom: 30px;
   background-repeat: no-repeat;
 }
 
-.note img {
+.menu img {
   max-width: 100px;
+}
+.note img {
+  max-width: 60px;
 }
 
 .menu .submenu {
@@ -323,8 +330,8 @@ ul {
   flex-direction: column;
   text-align: center;
   display: none;
-  top: -90%;
-  background-color: #1f8297;
+  top: -200px;
+  background-color: #207f96;
 }
 
 .menu .submenu li {
@@ -338,9 +345,38 @@ ul {
   color: #000;
 }
 
+.menu {
+  background-color: #207f95;
+}
+
+.col-2 .container-text {
+  padding: 20px;
+}
+
+.container-text p {
+  font-size: 28px;
+}
+
 @media screen and (min-width: 1025px) {
+  .menu {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
   .menu li:hover > .submenu {
     display: block;
+  }
+
+  .col-2 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .col-2 .container-omino,
+  .col-2 .container-text {
+    width: 50%;
+    padding: 30px 30px 0px 0px;
   }
 }
 
