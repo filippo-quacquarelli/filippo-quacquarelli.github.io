@@ -197,7 +197,7 @@ textarea {
   *::before,
   *::after {
     background: #fff !important;
-    color: #000 !important;
+    color: #681a1a !important;
     /* Black prints faster */
     box-shadow: none !important;
     text-shadow: none !important;
@@ -270,6 +270,11 @@ body {
   font-size: 22px;
   line-height: 1.75;
   background-color: #207f96;
+  color: #681a1a;
+}
+
+a {
+  color: #681a1a!important;
 }
 
 img {
@@ -297,7 +302,7 @@ ul {
 .menu li {
   margin: 20px;
   padding: 0;
-  max-width: 150px;
+  /* max-width: 150px; */
   position: relative;
 }
 
@@ -324,14 +329,25 @@ ul {
   max-width: 60px;
 }
 
+h3 {
+  font-size: 32px;
+}
+
 .menu .submenu {
   position: absolute;
-  width: 100%;
+  width: 200px;
+  left: calc( 50% - 100px );
   flex-direction: column;
   text-align: center;
   display: none;
   top: -200px;
   background-color: #207f96;
+  padding-top: 5px;
+}
+
+.menu .telefono .submenu {
+  top: -80px;
+  width: 180px;
 }
 
 .menu .submenu li {
@@ -342,7 +358,7 @@ ul {
 .menu .submenu li a {
   font-size: 30px;
   line-height: 1.2;
-  color: #000;
+  color: #681a1a;
 }
 
 .menu {
@@ -355,6 +371,7 @@ ul {
 
 .container-text p {
   font-size: 28px;
+  text-align: justify;
 }
 
 @media screen and (min-width: 1025px) {
@@ -382,6 +399,24 @@ ul {
 
 .menu .submenu.menu-open {
   display: block;
+}
+
+@media screen and (max-width: 1024px) {
+  .menu li {
+    margin: 5px;
+  }
+
+  .menu img {
+    max-width: 60px;
+  }
+
+  .note img {
+    max-width: 40px;
+  }
+
+  .container-text p {
+    font-size: 22px;
+  }
 }
 
 /*# sourceMappingURL=/main.c52e0fe2.css.map */
